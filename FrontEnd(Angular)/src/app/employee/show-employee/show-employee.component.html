@@ -1,0 +1,121 @@
+
+
+<div class="text-left">
+    <!-- Button Show Departments -->
+<button type="button" class="btn btn-info m-2" data-bs-toggle="modal" data-bs-target="#exampleModal">
+    Show Departments
+</button>
+</div>
+
+
+<table class="table table-hover ">
+    <thead>
+        <th>Id</th>
+        <th>Name</th>
+        <th>Age</th>
+        <th>Address</th>
+        <th>Dept Id</th>
+        <th>Operatins</th>
+    </thead>
+
+    <tbody>
+        <tr *ngFor="let item of employeeList$|async">
+            <td>{{item.id}}</td>
+            <td>{{item.name}}</td>
+            <td>{{item.age}}</td>
+            <td>{{item.address}}</td>
+            <!-- <td>{{item.deptId}}</td> -->
+            <td>{{mapDepts.get(item.deptId)}}</td>
+
+            <td>
+
+                <button class="btn btn-outline-primary me-2 mb-1"
+                (click)="modalEdit(item)" data-bs-toggle="modal" data-bs-target="#staticBackdrop"
+                >
+                    Edit
+                </button>
+
+                <button class="btn btn-outline-danger me-2 mb-1"
+                (click)="delete(item)"
+                >
+                    Delete
+                </button>
+
+            </td>
+
+
+        </tr>
+
+
+    </tbody>
+
+</table>
+
+
+  
+  <!-- Show Departments Modal -->
+  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Avilable Departments</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <p *ngFor="let item of deptsList$|async">
+                {{item.deptId}} - {{item.deptName}}
+          </p>
+        </div>
+        
+      </div>
+    </div>
+  </div>
+
+
+
+
+
+  <div class="text-center">
+
+    <!-- Button trigger New Employee -->
+   <button type="button" class="btn btn-success text-center m-2" data-bs-toggle="modal" data-bs-target="#staticBackdrop"
+   (click)="modalAdd()"
+   >
+       Add New Employee
+     </button>
+     
+ </div>
+  
+  <!-- Add New Employee -->
+  <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="staticBackdropLabel">{{Modaltitle}}</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+          (click)="modalClose()" id="closeModal-add-edit"
+          ></button>
+        </div>
+        <div class="modal-body">
+          
+
+
+            <app-add-editemployee [employee]="employee" *ngIf="activateAddEditEmployeeComponent"></app-add-editemployee>
+
+        </div>
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="alert alert-primary" role="alert" id="add-success-alert">
+    Employee Added !!
+  </div>
+
+  <div class="alert alert-primary" role="alert" id="update-success-alert">
+    Employee Updated !!
+  </div>
+
+  <div class="alert alert-primary" role="alert" id="delete-success-alert">
+    Employee Deleted !!
+  </div>
